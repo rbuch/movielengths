@@ -37,6 +37,5 @@ for i in range(2, total_pages):
         time.sleep(10)
 
 with open('{}minutemovies.txt'.format(length), 'w') as f:
-    for movie in movielist:
-        f.write(movie + "\n")
+    f.write('\n'.join(movielist))
 
