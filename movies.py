@@ -27,11 +27,7 @@ total_pages = int(jsonobj["total_pages"])
 
 print("{} total pages.".format(total_pages))
 
-movielist = []
-
-movielist = movielist + list(map(lambda x: x["title"], jsonobj["results"]))
-
-print(movielist)
+movielist = list(map(lambda x: x["title"], jsonobj["results"]))
 
 for i in range(2, total_pages):
     conn.request("GET", "/3/discover/movie?with_runtime.lte={}&with_runtime.gte={}&include_video=false&include_adult=false&sort_by=popularity.desc&language=en-US&page={}&api_key={}".format(length, length, i, key), payload)
