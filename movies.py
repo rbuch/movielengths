@@ -42,6 +42,7 @@ for i in range(2, total_pages):
     jsonobj = json.loads(data.decode("utf-8"))
     movielist = movielist + list(map(lambda x: x["title"], jsonobj["results"]))
     print("Got page {}".format(i))
+    # API prohibits requesting more than 40 queries every 10 seconds, so sleep
     if i % 40 == 0:
         time.sleep(10)
 
