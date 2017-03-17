@@ -19,10 +19,7 @@ payload = "{}"
 
 conn.request("GET", "/3/discover/movie?with_runtime.lte={}&with_runtime.gte={}&include_video=false&include_adult=false&sort_by=popularity.desc&language=en-US&api_key={}".format(length, length, key), payload)
 
-res = conn.getresponse()
-data = res.read()
-
-jsonobj = json.loads(data.decode("utf-8"))
+jsonobj = json.loads(conn.getresponse().read().decode("utf-8"))
 total_pages = int(jsonobj["total_pages"])
 
 print("{} total pages.".format(total_pages))
@@ -32,10 +29,7 @@ movielist = list(map(lambda x: x["title"], jsonobj["results"]))
 for i in range(2, total_pages):
     conn.request("GET", "/3/discover/movie?with_runtime.lte={}&with_runtime.gte={}&include_video=false&include_adult=false&sort_by=popularity.desc&language=en-US&page={}&api_key={}".format(length, length, i, key), payload)
 
-    res = conn.getresponse()
-    data = res.read()
-    
-    jsonobj = json.loads(data.decode("utf-8"))
+    jsonobj = json.loads(conn.getresponse().read().decode("utf-8"))
     movielist = movielist + list(map(lambda x: x["title"], jsonobj["results"]))
     print("Got page {}".format(i))
     # API prohibits requesting more than 40 queries every 10 seconds, so sleep
